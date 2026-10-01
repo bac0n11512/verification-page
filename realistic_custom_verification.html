@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Verification</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#f8f9fa;font-family:Arial,Helvetica,sans-serif;color:#202124;display:flex;align-items:center;justify-content:center}
+.card{width:360px;background:#fff;border:1px solid #dadce0;border-radius:8px;box-shadow:0 2px 8px rgba(60,64,67,.15);padding:28px}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:24px}
+.shield{width:30px;height:34px;position:relative}.shield:before{content:"";position:absolute;inset:0;background:#4285f4;clip-path:polygon(50% 0,92% 14%,86% 62%,50% 100%,14% 62%,8% 14%)}
+.check{position:absolute;color:white;font-size:18px;font-weight:bold;left:7px;top:6px}
+h1{font-size:20px;font-weight:400;margin:0 0 10px}p{font-size:14px;line-height:1.5;color:#5f6368;margin:0 0 22px}
+.verify{border:1px solid #dadce0;border-radius:4px;height:78px;display:flex;align-items:center;padding:14px;cursor:pointer;transition:.15s}.verify:hover{border-color:#a0a5aa;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.box{width:26px;height:26px;border:2px solid #5f6368;border-radius:3px;margin-right:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.box.loading{border:3px solid #dadce0;border-top-color:#4285f4;border-radius:50%;animation:spin .8s linear infinite}
+.box.done{background:#1a73e8;border-color:#1a73e8;color:#fff;font-size:18px}.label{font-size:15px}
+.status{margin-top:16px;font-size:13px;color:#5f6368;min-height:18px}.footer{border-top:1px solid #eee;margin-top:24px;padding-top:16px;font-size:11px;color:#80868b;text-align:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<main class="card">
+<div class="brand"><div class="shield"><span class="check">✓</span></div><strong>Security verification</strong></div>
+<h1>Verify that you're human</h1>
+<p>Please complete the quick verification below before continuing.</p>
+<div class="verify" id="verify" role="button" tabindex="0">
+<div class="box" id="box"></div><div class="label">I'm not a robot</div>
+</div>
+<div class="status" id="status"></div>
+<div class="footer">This is a custom verification page.</div>
+</main>
+<script>
+const verify=document.getElementById("verify"),box=document.getElementById("box"),status=document.getElementById("status");
+function startVerification(){
+ if(box.classList.contains("loading")||box.classList.contains("done"))return;
+ box.classList.add("loading");status.textContent="Verifying...";
+ setTimeout(()=>{
+  box.classList.remove("loading");box.classList.add("done");box.textContent="✓";status.textContent="Verification complete. Redirecting...";
+  setTimeout(()=>{window.location.href="https://docs.google.com/document/d/1vFZ0-KyQFzgO7_ZIZP_8sElsJzS-Q10DiiPHYUY2jQM/edit?tab=t.0";},700);
+ },900);
+}
+verify.addEventListener("click",startVerification);
+verify.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();startVerification();}});
+</script>
+</body>
+</html>
